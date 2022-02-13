@@ -1,2 +1,11 @@
-# FastAPI-weather
-The app that allow to get weather from openweather and save info in db
+# FastAPI-Postgres-docker-compose
+- FastAPI app
+- PostgreSQL integration using SQLAlchemy
+- Dockerfile and docker-compose integations
+
+# How to run this with Docker?
+- Make sure you have docker installed and runninng on your machine
+- Open the terminal to the docker-compose path and hit the following command
+```
+MYCOMPUTER:project user$ docker-compose up --build
+```
