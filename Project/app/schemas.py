@@ -13,7 +13,7 @@ class WeatherCreate(WeatherBase):
 
 
 class Weather(WeatherBase):
-    temp: float
+    temperature: float
 
     class Config:
         orm_mode = True
