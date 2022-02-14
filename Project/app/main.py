@@ -4,7 +4,8 @@ from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
-from app.get_weather import get
+from app.get_weather import get_weather_by_params
+from app.check_city_and_country import check_city_and_country
 from app.database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
@@ -22,15 +23,18 @@ def get_db():
 
 
 @app.get("/weather", response_model=schemas.Weather)
-def get_temp_info(country_code: str, city: str,
-                  date_time: datetime,
-                  db: Session = Depends(get_db)):
+def read_weather(country_code: str, city: str,
+                 date_time: datetime,
+                 db: Session = Depends(get_db)):
 
-    db_weather = crud.get_temp(db, country_code=country_code,
-                               city=city, date_time=date_time)
+    check_city_and_country(city, country_code)
+
+    db_weather = crud.get_weather_record(db, country_code=country_code,
+                                         city=city, date_time=date_time)
 
     if db_weather is None:
-        temp = get(city, country_code, date_time)
-        return crud.add_temp(db, country_code=country_code,
-                             city=city, date_time=date_time, temp=temp)
+        temperature = get_weather_by_params(city, country_code, date_time)
+        return crud.add_weather_record(db, country_code=country_code,
+                                       city=city, date_time=date_time,
+                                       temperature=temperature)
     return db_weather
