@@ -6,4 +6,4 @@ requests==2.7.0
 uvicorn>=0.15.0,<0.16.0
 uvloop>=0.14.0
 databases[postgresql]==0.4.2
-starlette==0.14.2
+starlette==0.27.0
